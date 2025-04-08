@@ -1,0 +1,17 @@
+altgraph==0.17.4
+certifi==2025.1.31
+charset-normalizer==3.4.1
+idna==3.10
+jsons==1.6.3
+numpy==2.2.4
+opencv-contrib-python==4.11.0.86
+packaging==24.2
+pefile==2023.2.7
+pillow==11.1.0
+pyinstaller==6.12.0
+pyinstaller-hooks-contrib==2025.2
+pywin32-ctypes==0.2.3
+requests==2.32.3
+setuptools==78.1.0
+typish==1.9.3
+urllib3==2.3.0

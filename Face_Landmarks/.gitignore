@@ -1,0 +1,7 @@
+**/__pycache__/
+.idea/
+.fdvenv/
+modules/
+build/
+dist/
+*.jpg
