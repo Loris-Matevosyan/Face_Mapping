@@ -14,5 +14,5 @@ def login(username, password):
         print("Login successfully")
         return access_token
     else:
-        print(f"Failed to login: ", response.json().get("message"))
+        print("Failed to login: ", response.json().get("message"))
         return None

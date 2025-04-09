@@ -19,7 +19,7 @@ class ImageSerialization():
         self.resizeImage()
 
         base64_image = self.encodeImage()
-        client_info = self.createDict(base64_image)
+        client_info = self.createClientInfo(base64_image)
         serialized_data = jsons.dump(client_info)
 
         return serialized_data
@@ -41,7 +41,7 @@ class ImageSerialization():
         return base64_image
 
 
-    def createDict(self, base64_image):
+    def createClientInfo(self, base64_image):
 
         client_info = {
             "first_name": self.user_data["first_name"],

@@ -30,6 +30,10 @@ class InitializeProgram():
 
             serialized_coordinates = self.processResponse(response)
             coordinates = self.deserialize(serialized_coordinates)
+
+            if coordinates == []:
+                raise ValueError('No coordinates were found')
+
             self.displayCoordinates(coordinates)
 
             displayImage(face_image, coordinates)

@@ -1,7 +1,6 @@
-from flask import Flask, request, jsonify
-from flask_restful import Api, Resource, abort, reqparse
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
-from waitress import serve
+from flask import request
+from flask_restful import Resource, abort, reqparse
+from flask_jwt_extended import get_jwt_identity, jwt_required
 from PIL import Image
 import jsons
 
@@ -14,39 +13,17 @@ from main import findLandmarksCoordinates
 
 
 
-app = Flask(__name__)
-api = Api(app)
-app.config["JWT_SECRET_KEY"] = "super_secret_key"
-jwt = JWTManager(app)
-
-
-parser = reqparse.RequestParser()
-parser.add_argument('first_name')
-parser.add_argument('last_name')
-parser.add_argument('age')
-parser.add_argument('image')
-parser.add_argument('file_extension')
-parser.add_argument('face_region')
-
-
-#Must be hidden
-users = { "client" : "secret_password" }
-
-
-@app.route("/login", methods=["POST"])
-def login():
-    username = request.json.get("username")
-    password = request.json.get("password")
-
-    if username in users and users[username] == password:
-
-        access_token = create_access_token(identity=username)
-        return jsonify(access_token=access_token)
-    else:
-        return jsonify({ "message" : "Invalid credentials"}), 401
-
-
 class ProcessImage(Resource):
+
+    def __init__(self):
+        self.parser = reqparse.RequestParser()
+        self.parser.add_argument('first_name')
+        self.parser.add_argument('last_name')
+        self.parser.add_argument('age')
+        self.parser.add_argument('image')
+        self.parser.add_argument('file_extension')
+        self.parser.add_argument('face_region')
+
 
     @jwt_required()
     def post(self):
@@ -94,7 +71,7 @@ class ProcessImage(Resource):
 
     def parseJsonArguments(self):
 
-        self.arguments = parser.parse_args()
+        self.arguments = self.parser.parse_args()
         serialized_image = self.arguments['image']
         face_region = self.arguments['face_region']
 
@@ -124,19 +101,3 @@ class ProcessImage(Resource):
         image.save(Path(os.getcwd()) / '..' / "Images" / file_name)
 
 
-
-api.add_resource(ProcessImage, '/image')
-
-
-if __name__ == '__main__':
-    serve(app, host="127.0.0.1", port=5001)
-
-
-
-# FOR RECEIVING MULTIPLE IMAGES
-# class ReceivedImages(Resource):
-# api.add_resource(ReceivedImages, '/images')
-
-# FOR DEBUG MODE
-# if __name__ == '__main__':
-#     app.run(host='127.0.0.1', port=5001, debug = True)
