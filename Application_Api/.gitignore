@@ -1,0 +1,7 @@
+**/__pycache__/
+.idea/
+.flvenv/
+modules/
+build/
+dist/
+*.jpg
