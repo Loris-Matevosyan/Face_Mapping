@@ -5,7 +5,7 @@ from waitress import serve
 
 
 
-class ApiConnection():
+class ApiConnection:
 
     def __init__(self):
         self.app = Flask(__name__)
@@ -16,7 +16,7 @@ class ApiConnection():
         self.jwt = JWTManager(self.app)
 
 
-    def getApi(self):
+    def get_api(self):
         return self.api
 
 

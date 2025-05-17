@@ -6,7 +6,7 @@ from api.endpoints.image_url import Image
 
 
 apiConnection = ApiConnection()
-api = apiConnection.getApi()
+api = apiConnection.get_api()
 add_resource(api)
 
 apiConnection.initialize()
